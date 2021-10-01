@@ -1,25 +1,64 @@
-import logo from './logo.svg';
 import './App.css';
+import { Switch, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+
+import Container from './components/Container';
+import AppBar from './components/AppBar';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Loader from './components/Loader';
+import Footer from './components/Footer';
+
+// import HomeView from './views/HomeView';
+// import MoviesView from './components/MoviesView';
+// import MovieDetailsPage from './components/MoviesView/MovieDetailsPage';
+// import NotFoundView from './views/NotFoundView';
+
+const HomeView = lazy(() =>
+  import('./views/HomeView' /* webpackChunkName: "HomeView" */),
+);
+const MoviesView = lazy(() =>
+  import('./components/MoviesView' /* webpackChunkName: "MoviesView" */),
+);
+const MovieDetailsPage = lazy(() =>
+  import(
+    './components/MoviesView/MovieDetailsPage' /* webpackChunkName: "MovieDetailsPage" */
+  ),
+);
+const NotFoundView = lazy(() =>
+  import('./views/NotFoundView' /* webpackChunkName: "NotFoundView" */),
+);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Container>
+        <AppBar />
+        <Suspense fallback={<Loader />}>
+          <Switch>
+            <Route path="/" exact>
+              <HomeView />
+            </Route>
+
+            <Route path="/movies" exact>
+              <MoviesView />
+            </Route>
+
+            <Route path="/movies/:slug">
+              <MovieDetailsPage />
+            </Route>
+
+            <Route>
+              <NotFoundView />
+            </Route>
+          </Switch>
+        </Suspense>
+
+        <ToastContainer autoClose={3000} />
+      </Container>
+      <Footer />
+    </>
   );
 }
-
 export default App;
