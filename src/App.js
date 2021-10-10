@@ -1,5 +1,5 @@
 import './App.css';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 
 import Container from './components/Container';
@@ -49,9 +49,11 @@ function App() {
               <MovieDetailsPage />
             </Route>
 
-            <Route>
+            {/* <Route>
               <NotFoundView />
-            </Route>
+            </Route> */}
+
+            <Redirect to={NotFoundView} />
           </Switch>
         </Suspense>
 
