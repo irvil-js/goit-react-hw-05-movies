@@ -49,11 +49,9 @@ function App() {
               <MovieDetailsPage />
             </Route>
 
-            {/* <Route>
+            <Route>
               <NotFoundView />
-            </Route> */}
-
-            <Redirect to={NotFoundView} />
+            </Route>
           </Switch>
         </Suspense>
 
